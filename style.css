@@ -52,12 +52,12 @@ h2 {
   display: none;
 }
 
-.plates input + label:before {
+.plates input+label:before {
   content: "⬜️";
   margin-right: 10px;
 }
 
-.plates input:checked + label:before {
+.plates input:checked+label:before {
   content: "🍒";
 }
 
@@ -70,6 +70,13 @@ input[type=submit] {
 }
 
 .add-items input {
+  padding: 10px;
+  outline: 0;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.btn {
+  margin-top: 30px;
   padding: 10px;
   outline: 0;
   border: 1px solid rgba(0, 0, 0, 0.1);

@@ -12,6 +12,7 @@
   <div class="wrapper">
     <h2>Fruits Basket</h2>
      <p></p>
+    <p>List</p> 
     <ul class="plates">
       <li>Loading Fruits...</li>
     </ul>
@@ -25,9 +26,8 @@
 <script>
 
   const addItems = document.querySelector(".add-items") 
-  const itemsList = document.querySelector(".plates")    
-  const items = []
-
+  const itemsList = document.querySelector(".plates")  
+  const items = JSON.parse(localStorage.getItem("items")) || [];
 
   function addItem(e) {
     e.preventDefault()
@@ -36,13 +36,39 @@
       text,
       select: false
     }
-   
-    
 
+    items.push(item)
+    display(items, itemsList)
+
+    localStorage.setItem("items", JSON.stringify(items))  
+    
     addItems.reset()
   }
 
-  document.addEventListener("submit", addItem)
+  function display(arr = [], htmlElement) {
+    htmlElement.innerHTML = arr.map((pie, i) => {
+      return `
+        <li>
+          <input type="checkbox" data-index=${i} id=index${i} ${pie.select ? "checked" : ""} >
+          <label for=index${i}>${pie.text}</label>
+        </li>
+      `
+    }).join("")
+  }
+
+  function toggle(e) {
+    if(!e.target.matches("input")) return // Exit
+    const index = e.target.dataset.index
+
+    items[index].select = !items[index].select
+    localStorage.setItem("items", JSON.stringify(items)) 
+    display(items, itemsList)
+  }
+
+  addItems.addEventListener("submit", addItem);
+  itemsList.addEventListener("click", toggle);
+  display(items, itemsList)
+
 
 </script>
 
